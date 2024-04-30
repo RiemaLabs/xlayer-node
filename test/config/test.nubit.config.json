@@ -1,0 +1,5 @@
+{
+  "rpcURL": "http://127.0.01:26658",
+  "namespace": "1234567890",
+  "authKey": "authKey"
+}
