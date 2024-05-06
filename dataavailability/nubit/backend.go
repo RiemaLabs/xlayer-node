@@ -13,6 +13,7 @@ import (
 	share "github.com/riemalabs/nubit-node/da"
 	client "github.com/riemalabs/nubit-node/rpc/rpc/client"
 	nodeBlob "github.com/riemalabs/nubit-node/strucs/btx"
+	"golang.org/x/crypto/sha3"
 )
 
 // // DABackender is an interface for components that store and retrieve batch data
@@ -66,10 +67,14 @@ func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address) (*Nubi
 	if err != nil {
 		return nil, err
 	}
+	ns := sha3.Sum224([]byte(config.Namespace))
+	name := namespace.MustNew(namespace.NamespaceVersionZero, ns[:])
+
+	log.Infof("⚙️     Nubit Namespace : %s ", string(name.ID))
 	return &NubitDABackend{
 		config:              &config,
 		attestationContract: attestationContract,
-		ns:                  namespace.MustNewV0([]byte(config.Namespace)),
+		ns:                  name,
 		client:              cn,
 	}, nil
 }

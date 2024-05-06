@@ -8,7 +8,7 @@ import (
 
 type Config struct {
 	RpcURL    string `json:"rpcURL,omitempty"`
-	Namespace string `json:"namespace,omitempty"`
+	Namespace string `json:"modularAppName,omitempty"`
 	AuthKey   string `json:"authKey,omitempty"`
 }
 
