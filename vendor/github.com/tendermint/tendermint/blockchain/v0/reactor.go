@@ -370,7 +370,7 @@ FOR_LOOP:
 				var stateMachineValid bool
 				// Block sync doesn't check that the `Data` in a block is valid.
 				// Since nubit-core can't determine if the `Data` in a block
-				// is valid, the next line asks nubit-app to check if the
+				// is valid, the next line asks nubit-validator to check if the
 				// block is valid via ProcessProposal. If this step wasn't
 				// performed, a malicious node could fabricate an alternative
 				// set of transactions that would cause a different app hash and

@@ -3,7 +3,7 @@ module github.com/0xPolygonHermez/zkevm-node
 go 1.22.2
 
 require (
-	github.com/0xPolygonHermez/zkevm-data-streamer v0.1.18
+	github.com/0xPolygonHermez/zkevm-data-streamer v0.1.19
 	github.com/didip/tollbooth/v6 v6.1.2
 	github.com/dop251/goja v0.0.0-20230806174421-c933cf95e127
 	github.com/ethereum/go-ethereum v1.13.11
@@ -13,19 +13,19 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/habx/pg-commands v0.6.1
 	github.com/hermeznetwork/tracerr v0.3.2
-	github.com/iden3/go-iden3-crypto v0.0.15
+	github.com/iden3/go-iden3-crypto v0.0.16
 	github.com/invopop/jsonschema v0.12.0
 	github.com/jackc/pgconn v1.14.3
-	github.com/jackc/pgx/v4 v4.18.2
+	github.com/jackc/pgx/v4 v4.18.3
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/prometheus/client_model v0.6.0
-	github.com/prometheus/common v0.47.0
+	github.com/prometheus/common v0.49.0
 	github.com/rubenv/sql-migrate v1.6.1
 	github.com/spf13/afero v1.11.0
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.9.0
 	github.com/umbracle/ethgo v0.1.4-0.20230712173909-df37dddf16f0
-	github.com/urfave/cli/v2 v2.26.0
+	github.com/urfave/cli/v2 v2.27.1
 	go.uber.org/zap v1.27.0
 	golang.org/x/crypto v0.21.0
 	golang.org/x/net v0.21.0
@@ -125,9 +125,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
-	github.com/riemalabs/go-header v0.5.5 // indirect
-	github.com/riemalabs/nubit-app v1.7.0
-	github.com/riemalabs/nubit-node v0.0.0-00010101000000-000000000000
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/rs/cors v1.8.3 // indirect
@@ -160,7 +157,7 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.18.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240227224415-6ceb2ff114de // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240304161311-37d4d3c04a78 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
@@ -174,10 +171,12 @@ require (
 )
 
 require (
-	github.com/0xPolygon/agglayer v0.0.1
+	github.com/0xPolygon/agglayer v0.1.4
 	github.com/0xPolygon/cdk-data-availability v0.0.5
+	github.com/RiemaLabs/nubit-node v0.0.0-00010101000000-000000000000
+	github.com/RiemaLabs/nubit-validator v0.1.0-rc.1
 	github.com/fatih/color v1.16.0
-	github.com/prometheus/client_golang v1.18.0
+	github.com/prometheus/client_golang v1.19.0
 	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
 )
 
@@ -194,6 +193,11 @@ require (
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/ChainSafe/go-schnorrkel v1.0.0 // indirect
 	github.com/Jorropo/jsync v1.0.1 // indirect
+	github.com/RiemaLabs/go-libp2p-header v0.1.0-rc.1 // indirect
+	github.com/RiemaLabs/go-libp2p-messenger v0.1.0-rc.1 // indirect
+	github.com/RiemaLabs/merkletree v0.1.0-rc.1 // indirect
+	github.com/RiemaLabs/nubit-kzg v0.20.0 // indirect
+	github.com/RiemaLabs/rsmt2d v0.11.0 // indirect
 	github.com/Workiva/go-datastructures v1.0.53 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/aws/aws-sdk-go v1.44.122 // indirect
@@ -239,8 +243,6 @@ require (
 	github.com/filecoin-project/go-jsonrpc v0.3.1 // indirect
 	github.com/flynn/noise v1.1.0 // indirect
 	github.com/francoispqt/gojay v1.2.13 // indirect
-	github.com/gammazero/deque v0.2.0 // indirect
-	github.com/gammazero/workerpool v1.1.3 // indirect
 	github.com/go-kit/kit v0.12.0 // indirect
 	github.com/go-kit/log v0.2.1 // indirect
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
@@ -258,7 +260,7 @@ require (
 	github.com/google/orderedcode v0.0.1 // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
-	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
+	github.com/googleapis/gax-go/v2 v2.12.2 // indirect
 	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/grafana/otel-profiling-go v0.5.1 // indirect
@@ -370,10 +372,6 @@ require (
 	github.com/raulk/go-watchdog v1.3.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/regen-network/cosmos-proto v0.3.1 // indirect
-	github.com/riemalabs/go-libp2p-messenger v0.2.0 // indirect
-	github.com/riemalabs/merkletree v0.0.0-20210714075610-a84dc3ddbbe4 // indirect
-	github.com/riemalabs/nubit-kzg v0.20.0 // indirect
-	github.com/riemalabs/rsmt2d v0.11.0 // indirect
 	github.com/rollkit/go-da v0.4.0 // indirect
 	github.com/rs/zerolog v1.31.0 // indirect
 	github.com/sasha-s/go-deadlock v0.3.1 // indirect
@@ -393,8 +391,8 @@ require (
 	github.com/zondax/ledger-go v0.14.3 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.47.0 // indirect
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.47.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.49.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0 // indirect
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.21.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
@@ -407,34 +405,27 @@ require (
 	golang.org/x/oauth2 v0.17.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 	gonum.org/v1/gonum v0.14.0 // indirect
-	google.golang.org/api v0.162.0 // indirect
+	google.golang.org/api v0.169.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240227224415-6ceb2ff114de // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240311132316-a219d84964c2 // indirect
 	lukechampine.com/blake3 v1.2.1 // indirect
 	nhooyr.io/websocket v1.8.7 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
 
 replace (
-	github.com/Riemalabs/go-header => ../go-header
-	github.com/Riemalabs/go-libp2p-messenger => ../go-libp2p-messenger
-	github.com/Riemalabs/merkletree => ../merkletree
-	github.com/Riemalabs/nubit-app => ../nubit-app
-	github.com/Riemalabs/nubit-kzg => ../nubit-kzg
-	github.com/Riemalabs/nubit-node => ../nubit-node
-	github.com/Riemalabs/rsmt2d => ../rsmt2d
+	github.com/RiemaLabs/go-libp2p-header => ../go-header
+	github.com/RiemaLabs/go-libp2p-messenger => ../go-libp2p-messenger
+	github.com/RiemaLabs/merkletree => ../merkletree
+	github.com/RiemaLabs/nubit-kzg => ../nubit-kzg
+	github.com/RiemaLabs/nubit-node => ../nubit-node
+	github.com/RiemaLabs/nubit-validator => ../nubit-app
+	github.com/RiemaLabs/rsmt2d => ../rsmt2d
 	github.com/cosmos/cosmos-sdk => ../cosmos-sdk
 	github.com/cosmos/ledger-cosmos-go => github.com/cosmos/ledger-cosmos-go v0.12.4
 	github.com/filecoin-project/dagstore => ../dagstore
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-	github.com/riemalabs/go-header => ../go-header
-	github.com/riemalabs/go-libp2p-messenger => ../go-libp2p-messenger
-	github.com/riemalabs/merkletree => ../merkletree
-	github.com/riemalabs/nubit-app => ../nubit-app
-	github.com/riemalabs/nubit-kzg => ../nubit-kzg
-	github.com/riemalabs/nubit-node => ../nubit-node
-	github.com/riemalabs/rsmt2d => ../rsmt2d
 	github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 	github.com/tendermint/tendermint => ../nubit-core
 )

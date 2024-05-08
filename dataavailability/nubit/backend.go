@@ -7,12 +7,12 @@ import (
 
 	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/polygondatacommittee"
 	"github.com/0xPolygonHermez/zkevm-node/log"
+	share "github.com/RiemaLabs/nubit-node/da"
+	client "github.com/RiemaLabs/nubit-node/rpc/rpc/client"
+	nodeBlob "github.com/RiemaLabs/nubit-node/strucs/btx"
+	"github.com/RiemaLabs/nubit-validator/da/namespace"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/riemalabs/nubit-app/da/namespace"
-	share "github.com/riemalabs/nubit-node/da"
-	client "github.com/riemalabs/nubit-node/rpc/rpc/client"
-	nodeBlob "github.com/riemalabs/nubit-node/strucs/btx"
 	"golang.org/x/crypto/sha3"
 )
 

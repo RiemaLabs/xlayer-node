@@ -51,7 +51,7 @@ type Block struct {
 
 // ValidateBasic performs basic validation that doesn't involve state data. It
 // checks the internal consistency of the block. Further validation is done
-// using state#ValidateBlock. nubit-app's ProcessProposal checks that the
+// using state#ValidateBlock. nubit-validator's ProcessProposal checks that the
 // block's DataHash matches the hash of the data availability header.
 func (b *Block) ValidateBasic() error {
 	if b == nil {
@@ -98,7 +98,7 @@ func (b *Block) ValidateBasic() error {
 }
 
 // fillHeader fills in any remaining header fields that are a function of the
-// block data NOTE: we expect nubit-app to populate the block DataHash but we
+// block data NOTE: we expect nubit-validator to populate the block DataHash but we
 // populate it here (in nubit-core) to not break existing tests in this repo.
 func (b *Block) fillHeader() {
 	if b.LastCommitHash == nil {
@@ -1035,7 +1035,7 @@ func (data *Data) Hash() cmtbytes.HexBytes {
 		data.hash = data.Txs.Hash() // NOTE: leaves of merkle tree are TxIDs
 	}
 
-	// this is the expected behavior where `data.hash` was set by nubit-app
+	// this is the expected behavior where `data.hash` was set by nubit-validator
 	// in PrepareProposal
 	return data.hash
 }

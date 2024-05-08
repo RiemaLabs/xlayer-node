@@ -33,8 +33,8 @@ dario.cat/mergo
 ## explicit; go 1.17
 filippo.io/edwards25519
 filippo.io/edwards25519/field
-# github.com/0xPolygon/agglayer v0.0.1
-## explicit; go 1.21
+# github.com/0xPolygon/agglayer v0.1.4
+## explicit; go 1.21.3
 github.com/0xPolygon/agglayer/client
 github.com/0xPolygon/agglayer/rpc/types
 github.com/0xPolygon/agglayer/tx
@@ -48,7 +48,7 @@ github.com/0xPolygon/cdk-data-availability/db
 github.com/0xPolygon/cdk-data-availability/log
 github.com/0xPolygon/cdk-data-availability/rpc
 github.com/0xPolygon/cdk-data-availability/types
-# github.com/0xPolygonHermez/zkevm-data-streamer v0.1.18
+# github.com/0xPolygonHermez/zkevm-data-streamer v0.1.19
 ## explicit; go 1.19
 github.com/0xPolygonHermez/zkevm-data-streamer
 github.com/0xPolygonHermez/zkevm-data-streamer/datastreamer
@@ -95,6 +95,105 @@ github.com/ProtonMail/go-crypto/openpgp/internal/ecc
 github.com/ProtonMail/go-crypto/openpgp/internal/encoding
 github.com/ProtonMail/go-crypto/openpgp/packet
 github.com/ProtonMail/go-crypto/openpgp/s2k
+# github.com/RiemaLabs/go-libp2p-header v0.1.0-rc.1 => ../go-header
+## explicit; go 1.22
+github.com/RiemaLabs/go-libp2p-header
+github.com/RiemaLabs/go-libp2p-header/headertest
+github.com/RiemaLabs/go-libp2p-header/p2p
+github.com/RiemaLabs/go-libp2p-header/p2p/pb
+github.com/RiemaLabs/go-libp2p-header/store
+github.com/RiemaLabs/go-libp2p-header/sync
+# github.com/RiemaLabs/go-libp2p-messenger v0.1.0-rc.1 => ../go-libp2p-messenger
+## explicit; go 1.16
+github.com/RiemaLabs/go-libp2p-messenger/serde
+# github.com/RiemaLabs/merkletree v0.1.0-rc.1 => ../merkletree
+## explicit; go 1.13
+github.com/RiemaLabs/merkletree
+# github.com/RiemaLabs/nubit-kzg v0.20.0 => ../nubit-kzg
+## explicit; go 1.22.1
+github.com/RiemaLabs/nubit-kzg
+github.com/RiemaLabs/nubit-kzg/namespace
+github.com/RiemaLabs/nubit-kzg/proto
+# github.com/RiemaLabs/nubit-node v0.0.0-00010101000000-000000000000 => ../nubit-node
+## explicit; go 1.22.1
+github.com/RiemaLabs/nubit-node/da
+github.com/RiemaLabs/nubit-node/da/das
+github.com/RiemaLabs/nubit-node/da/full
+github.com/RiemaLabs/nubit-node/da/light
+github.com/RiemaLabs/nubit-node/da/sharetest
+github.com/RiemaLabs/nubit-node/da/test
+github.com/RiemaLabs/nubit-node/factory/blob
+github.com/RiemaLabs/nubit-node/factory/core
+github.com/RiemaLabs/nubit-node/factory/da
+github.com/RiemaLabs/nubit-node/factory/das
+github.com/RiemaLabs/nubit-node/factory/header
+github.com/RiemaLabs/nubit-node/factory/node
+github.com/RiemaLabs/nubit-node/factory/p2p
+github.com/RiemaLabs/nubit-node/factory/share
+github.com/RiemaLabs/nubit-node/factory/state
+github.com/RiemaLabs/nubit-node/man
+github.com/RiemaLabs/nubit-node/p2p
+github.com/RiemaLabs/nubit-node/p2p/discovery
+github.com/RiemaLabs/nubit-node/p2p/p2peds
+github.com/RiemaLabs/nubit-node/p2p/p2peds/pb
+github.com/RiemaLabs/nubit-node/p2p/p2pnd
+github.com/RiemaLabs/nubit-node/p2p/p2pnd/pb
+github.com/RiemaLabs/nubit-node/p2p/p2psub
+github.com/RiemaLabs/nubit-node/p2p/p2psub/pb
+github.com/RiemaLabs/nubit-node/p2p/peers
+github.com/RiemaLabs/nubit-node/rpc/core
+github.com/RiemaLabs/nubit-node/rpc/rpc/client
+github.com/RiemaLabs/nubit-node/rpc/rpc/perms
+github.com/RiemaLabs/nubit-node/rtrv/eds
+github.com/RiemaLabs/nubit-node/rtrv/eds/cache
+github.com/RiemaLabs/nubit-node/rtrv/eds/edstest
+github.com/RiemaLabs/nubit-node/rtrv/lp2p
+github.com/RiemaLabs/nubit-node/rtrv/rtrv
+github.com/RiemaLabs/nubit-node/strucs/btx
+github.com/RiemaLabs/nubit-node/strucs/btx/blobtest
+github.com/RiemaLabs/nubit-node/strucs/eh
+github.com/RiemaLabs/nubit-node/strucs/eh/headertest
+github.com/RiemaLabs/nubit-node/strucs/eh/proto
+github.com/RiemaLabs/nubit-node/strucs/state
+github.com/RiemaLabs/nubit-node/strucs/utils/authtoken
+github.com/RiemaLabs/nubit-node/strucs/utils/fxutil
+github.com/RiemaLabs/nubit-node/strucs/utils/keystore
+github.com/RiemaLabs/nubit-node/strucs/utils/pidstore
+github.com/RiemaLabs/nubit-node/strucs/utils/utils
+# github.com/RiemaLabs/nubit-validator v0.1.0-rc.1 => ../nubit-app
+## explicit; go 1.22.1
+github.com/RiemaLabs/nubit-validator/auxiliary/ante
+github.com/RiemaLabs/nubit-validator/auxiliary/encoding
+github.com/RiemaLabs/nubit-validator/auxiliary/errors
+github.com/RiemaLabs/nubit-validator/cmd/nubit-validatord/cmd
+github.com/RiemaLabs/nubit-validator/da/da
+github.com/RiemaLabs/nubit-validator/da/namespace
+github.com/RiemaLabs/nubit-validator/da/shares
+github.com/RiemaLabs/nubit-validator/da/square
+github.com/RiemaLabs/nubit-validator/pf
+github.com/RiemaLabs/nubit-validator/proto/nubit/da
+github.com/RiemaLabs/nubit-validator/test/util/testfactory
+github.com/RiemaLabs/nubit-validator/test/util/testnode
+github.com/RiemaLabs/nubit-validator/tx
+github.com/RiemaLabs/nubit-validator/utils/appconsts
+github.com/RiemaLabs/nubit-validator/utils/appconsts/v1
+github.com/RiemaLabs/nubit-validator/utils/tk/paramfilter
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/blob
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/blob/ante
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/blob/client/cli
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/blob/keeper
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/blob/types
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/mint
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/mint/client/cli
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/mint/keeper
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/mint/simulation
+github.com/RiemaLabs/nubit-validator/utils/tk/sh/mint/types
+github.com/RiemaLabs/nubit-validator/utils/tk/tokenfilter
+github.com/RiemaLabs/nubit-validator/utils/tk/upgrade
+github.com/RiemaLabs/nubit-validator/utils/wrapper
+# github.com/RiemaLabs/rsmt2d v0.11.0 => ../rsmt2d
+## explicit; go 1.22.1
+github.com/RiemaLabs/rsmt2d
 # github.com/StackExchange/wmi v1.2.1
 ## explicit; go 1.13
 github.com/StackExchange/wmi
@@ -894,12 +993,6 @@ github.com/francoispqt/gojay
 # github.com/fsnotify/fsnotify v1.7.0
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
-# github.com/gammazero/deque v0.2.0
-## explicit; go 1.18
-github.com/gammazero/deque
-# github.com/gammazero/workerpool v1.1.3
-## explicit; go 1.18
-github.com/gammazero/workerpool
 # github.com/gballet/go-libpcsclite v0.0.0-20190607065134-2772fd86a8ff
 ## explicit
 github.com/gballet/go-libpcsclite
@@ -1131,7 +1224,7 @@ github.com/google/uuid
 ## explicit; go 1.19
 github.com/googleapis/enterprise-certificate-proxy/client
 github.com/googleapis/enterprise-certificate-proxy/client/util
-# github.com/googleapis/gax-go/v2 v2.12.0
+# github.com/googleapis/gax-go/v2 v2.12.2
 ## explicit; go 1.19
 github.com/googleapis/gax-go/v2
 github.com/googleapis/gax-go/v2/apierror
@@ -1263,7 +1356,7 @@ github.com/huin/goupnp/httpu
 github.com/huin/goupnp/scpd
 github.com/huin/goupnp/soap
 github.com/huin/goupnp/ssdp
-# github.com/iden3/go-iden3-crypto v0.0.15
+# github.com/iden3/go-iden3-crypto v0.0.16
 ## explicit; go 1.18
 github.com/iden3/go-iden3-crypto/ffg
 github.com/iden3/go-iden3-crypto/goldenposeidon
@@ -1473,7 +1566,7 @@ github.com/jackc/pgservicefile
 # github.com/jackc/pgtype v1.14.0
 ## explicit; go 1.13
 github.com/jackc/pgtype
-# github.com/jackc/pgx/v4 v4.18.2
+# github.com/jackc/pgx/v4 v4.18.3
 ## explicit; go 1.17
 github.com/jackc/pgx/v4
 github.com/jackc/pgx/v4/internal/sanitize
@@ -1883,8 +1976,8 @@ github.com/polydawn/refmt/obj/atlas
 github.com/polydawn/refmt/pretty
 github.com/polydawn/refmt/shared
 github.com/polydawn/refmt/tok
-# github.com/prometheus/client_golang v1.18.0
-## explicit; go 1.19
+# github.com/prometheus/client_golang v1.19.0
+## explicit; go 1.20
 github.com/prometheus/client_golang/prometheus
 github.com/prometheus/client_golang/prometheus/internal
 github.com/prometheus/client_golang/prometheus/promhttp
@@ -1895,8 +1988,8 @@ github.com/prometheus/client_golang/prometheus/testutil/promlint/validations
 # github.com/prometheus/client_model v0.6.0
 ## explicit; go 1.19
 github.com/prometheus/client_model/go
-# github.com/prometheus/common v0.47.0
-## explicit; go 1.20
+# github.com/prometheus/common v0.49.0
+## explicit; go 1.21
 github.com/prometheus/common/expfmt
 github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
 github.com/prometheus/common/model
@@ -1942,105 +2035,6 @@ github.com/rcrowley/go-metrics
 # github.com/regen-network/cosmos-proto v0.3.1
 ## explicit; go 1.13
 github.com/regen-network/cosmos-proto
-# github.com/riemalabs/go-header v0.5.5 => ../go-header
-## explicit; go 1.22
-github.com/riemalabs/go-header
-github.com/riemalabs/go-header/headertest
-github.com/riemalabs/go-header/p2p
-github.com/riemalabs/go-header/p2p/pb
-github.com/riemalabs/go-header/store
-github.com/riemalabs/go-header/sync
-# github.com/riemalabs/go-libp2p-messenger v0.2.0 => ../go-libp2p-messenger
-## explicit; go 1.16
-github.com/riemalabs/go-libp2p-messenger/serde
-# github.com/riemalabs/merkletree v0.0.0-20210714075610-a84dc3ddbbe4 => ../merkletree
-## explicit; go 1.13
-github.com/riemalabs/merkletree
-# github.com/riemalabs/nubit-app v1.7.0 => ../nubit-app
-## explicit; go 1.22.1
-github.com/riemalabs/nubit-app/auxiliary/ante
-github.com/riemalabs/nubit-app/auxiliary/encoding
-github.com/riemalabs/nubit-app/auxiliary/errors
-github.com/riemalabs/nubit-app/cmd/nubit-appd/cmd
-github.com/riemalabs/nubit-app/da/da
-github.com/riemalabs/nubit-app/da/namespace
-github.com/riemalabs/nubit-app/da/shares
-github.com/riemalabs/nubit-app/da/square
-github.com/riemalabs/nubit-app/pf
-github.com/riemalabs/nubit-app/proto/nubit/da
-github.com/riemalabs/nubit-app/test/util/testfactory
-github.com/riemalabs/nubit-app/test/util/testnode
-github.com/riemalabs/nubit-app/tx
-github.com/riemalabs/nubit-app/utils/appconsts
-github.com/riemalabs/nubit-app/utils/appconsts/v1
-github.com/riemalabs/nubit-app/utils/tk/paramfilter
-github.com/riemalabs/nubit-app/utils/tk/sh/blob
-github.com/riemalabs/nubit-app/utils/tk/sh/blob/ante
-github.com/riemalabs/nubit-app/utils/tk/sh/blob/client/cli
-github.com/riemalabs/nubit-app/utils/tk/sh/blob/keeper
-github.com/riemalabs/nubit-app/utils/tk/sh/blob/types
-github.com/riemalabs/nubit-app/utils/tk/sh/mint
-github.com/riemalabs/nubit-app/utils/tk/sh/mint/client/cli
-github.com/riemalabs/nubit-app/utils/tk/sh/mint/keeper
-github.com/riemalabs/nubit-app/utils/tk/sh/mint/simulation
-github.com/riemalabs/nubit-app/utils/tk/sh/mint/types
-github.com/riemalabs/nubit-app/utils/tk/tokenfilter
-github.com/riemalabs/nubit-app/utils/tk/upgrade
-github.com/riemalabs/nubit-app/utils/wrapper
-# github.com/riemalabs/nubit-kzg v0.20.0 => ../nubit-kzg
-## explicit; go 1.22.1
-github.com/riemalabs/nubit-kzg
-github.com/riemalabs/nubit-kzg/namespace
-github.com/riemalabs/nubit-kzg/proto
-# github.com/riemalabs/nubit-node v0.0.0-00010101000000-000000000000 => ../nubit-node
-## explicit; go 1.22.1
-github.com/riemalabs/nubit-node/da
-github.com/riemalabs/nubit-node/da/das
-github.com/riemalabs/nubit-node/da/full
-github.com/riemalabs/nubit-node/da/light
-github.com/riemalabs/nubit-node/da/sharetest
-github.com/riemalabs/nubit-node/da/test
-github.com/riemalabs/nubit-node/factory/blob
-github.com/riemalabs/nubit-node/factory/core
-github.com/riemalabs/nubit-node/factory/da
-github.com/riemalabs/nubit-node/factory/das
-github.com/riemalabs/nubit-node/factory/header
-github.com/riemalabs/nubit-node/factory/node
-github.com/riemalabs/nubit-node/factory/p2p
-github.com/riemalabs/nubit-node/factory/share
-github.com/riemalabs/nubit-node/factory/state
-github.com/riemalabs/nubit-node/man
-github.com/riemalabs/nubit-node/p2p
-github.com/riemalabs/nubit-node/p2p/discovery
-github.com/riemalabs/nubit-node/p2p/p2peds
-github.com/riemalabs/nubit-node/p2p/p2peds/pb
-github.com/riemalabs/nubit-node/p2p/p2pnd
-github.com/riemalabs/nubit-node/p2p/p2pnd/pb
-github.com/riemalabs/nubit-node/p2p/p2psub
-github.com/riemalabs/nubit-node/p2p/p2psub/pb
-github.com/riemalabs/nubit-node/p2p/peers
-github.com/riemalabs/nubit-node/rpc/core
-github.com/riemalabs/nubit-node/rpc/rpc/client
-github.com/riemalabs/nubit-node/rpc/rpc/perms
-github.com/riemalabs/nubit-node/rtrv/eds
-github.com/riemalabs/nubit-node/rtrv/eds/cache
-github.com/riemalabs/nubit-node/rtrv/eds/edstest
-github.com/riemalabs/nubit-node/rtrv/lp2p
-github.com/riemalabs/nubit-node/rtrv/rtrv
-github.com/riemalabs/nubit-node/strucs/btx
-github.com/riemalabs/nubit-node/strucs/btx/blobtest
-github.com/riemalabs/nubit-node/strucs/eh
-github.com/riemalabs/nubit-node/strucs/eh/headertest
-github.com/riemalabs/nubit-node/strucs/eh/proto
-github.com/riemalabs/nubit-node/strucs/state
-github.com/riemalabs/nubit-node/strucs/utils/authtoken
-github.com/riemalabs/nubit-node/strucs/utils/fxutil
-github.com/riemalabs/nubit-node/strucs/utils/keystore
-github.com/riemalabs/nubit-node/strucs/utils/pidstore
-github.com/riemalabs/nubit-node/strucs/utils/utils
-# github.com/riemalabs/rsmt2d v0.11.0 => ../rsmt2d
-## explicit; go 1.22.1
-github.com/riemalabs/rsmt2d
 # github.com/rivo/uniseg v0.2.0
 ## explicit; go 1.12
 github.com/rivo/uniseg
@@ -2296,7 +2290,7 @@ github.com/umbracle/ethgo/abi
 # github.com/umbracle/fastrlp v0.0.0-20220527094140-59d5dd30e722
 ## explicit; go 1.12
 github.com/umbracle/fastrlp
-# github.com/urfave/cli/v2 v2.26.0
+# github.com/urfave/cli/v2 v2.27.1
 ## explicit; go 1.18
 github.com/urfave/cli/v2
 # github.com/valyala/fastjson v1.4.1
@@ -2355,11 +2349,11 @@ go.opencensus.io/trace
 go.opencensus.io/trace/internal
 go.opencensus.io/trace/propagation
 go.opencensus.io/trace/tracestate
-# go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.47.0
+# go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.49.0
 ## explicit; go 1.20
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc/internal
-# go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.47.0
+# go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0
 ## explicit; go 1.20
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp/internal/semconvutil
@@ -2384,6 +2378,7 @@ go.opentelemetry.io/otel/exporters/stdout/stdouttrace
 ## explicit; go 1.20
 go.opentelemetry.io/otel/metric
 go.opentelemetry.io/otel/metric/embedded
+go.opentelemetry.io/otel/metric/noop
 # go.opentelemetry.io/otel/sdk v1.24.0
 ## explicit; go 1.20
 go.opentelemetry.io/otel/sdk
@@ -2588,7 +2583,7 @@ gonum.org/v1/gonum/mathext
 gonum.org/v1/gonum/mathext/internal/amos
 gonum.org/v1/gonum/mathext/internal/cephes
 gonum.org/v1/gonum/mathext/internal/gonum
-# google.golang.org/api v0.162.0
+# google.golang.org/api v0.169.0
 ## explicit; go 1.19
 google.golang.org/api/googleapi
 google.golang.org/api/googleapi/transport
@@ -2622,14 +2617,13 @@ google.golang.org/appengine/urlfetch
 ## explicit; go 1.19
 google.golang.org/genproto/googleapis/type/date
 google.golang.org/genproto/googleapis/type/expr
-google.golang.org/genproto/internal
 google.golang.org/genproto/protobuf/field_mask
-# google.golang.org/genproto/googleapis/api v0.0.0-20240227224415-6ceb2ff114de
+# google.golang.org/genproto/googleapis/api v0.0.0-20240311132316-a219d84964c2
 ## explicit; go 1.19
 google.golang.org/genproto/googleapis/api
 google.golang.org/genproto/googleapis/api/annotations
 google.golang.org/genproto/googleapis/api/httpbody
-# google.golang.org/genproto/googleapis/rpc v0.0.0-20240227224415-6ceb2ff114de
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20240304161311-37d4d3c04a78
 ## explicit; go 1.19
 google.golang.org/genproto/googleapis/rpc/code
 google.golang.org/genproto/googleapis/rpc/errdetails
@@ -2786,23 +2780,16 @@ rsc.io/tmplfunc/internal/parse
 ## explicit; go 1.12
 sigs.k8s.io/yaml
 sigs.k8s.io/yaml/goyaml.v2
-# github.com/Riemalabs/go-header => ../go-header
-# github.com/Riemalabs/go-libp2p-messenger => ../go-libp2p-messenger
-# github.com/Riemalabs/merkletree => ../merkletree
-# github.com/Riemalabs/nubit-app => ../nubit-app
-# github.com/Riemalabs/nubit-kzg => ../nubit-kzg
-# github.com/Riemalabs/nubit-node => ../nubit-node
-# github.com/Riemalabs/rsmt2d => ../rsmt2d
+# github.com/RiemaLabs/go-libp2p-header => ../go-header
+# github.com/RiemaLabs/go-libp2p-messenger => ../go-libp2p-messenger
+# github.com/RiemaLabs/merkletree => ../merkletree
+# github.com/RiemaLabs/nubit-kzg => ../nubit-kzg
+# github.com/RiemaLabs/nubit-node => ../nubit-node
+# github.com/RiemaLabs/nubit-validator => ../nubit-app
+# github.com/RiemaLabs/rsmt2d => ../rsmt2d
 # github.com/cosmos/cosmos-sdk => ../cosmos-sdk
 # github.com/cosmos/ledger-cosmos-go => github.com/cosmos/ledger-cosmos-go v0.12.4
 # github.com/filecoin-project/dagstore => ../dagstore
 # github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-# github.com/riemalabs/go-header => ../go-header
-# github.com/riemalabs/go-libp2p-messenger => ../go-libp2p-messenger
-# github.com/riemalabs/merkletree => ../merkletree
-# github.com/riemalabs/nubit-app => ../nubit-app
-# github.com/riemalabs/nubit-kzg => ../nubit-kzg
-# github.com/riemalabs/nubit-node => ../nubit-node
-# github.com/riemalabs/rsmt2d => ../rsmt2d
 # github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 # github.com/tendermint/tendermint => ../nubit-core

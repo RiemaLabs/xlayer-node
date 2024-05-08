@@ -1067,7 +1067,7 @@ func (m *BlockMeta) GetNumTxs() int64 {
 // data root. In a normal Cosmos chain, the data root is the root of a Merkle
 // tree of transactions in the block. However, in Nubit the data root is the
 // root of the row and column roots in the extended data square. See
-// https://github.com/riemalabs/nubit-app/blob/852a229f11f0f269021b36f7621609f432bb858b/pkg/da/data_availability_header.go
+// https://github.com/RiemaLabs/nubit-validator/blob/852a229f11f0f269021b36f7621609f432bb858b/pkg/da/data_availability_header.go
 // for more details. Therefore, TxProof isn't sufficient to prove the existence
 // of a transaction in a Nubit block and ShareProof was defined instead. See
 // ShareProof for more details.
@@ -1195,7 +1195,7 @@ func (m *IndexWrapper) GetTypeId() string {
 
 // BlobTx wraps an encoded sdk.Tx with a second field to contain blobs of data.
 // The raw bytes of the blobs are not signed over, instead we verify each blob
-// using the relevant MsgPayForBlobs that is signed over in the encoded sdk.Tx.
+// using the relevant MsgSubmitBlobPayments that is signed over in the encoded sdk.Tx.
 type BlobTx struct {
 	Tx     []byte  `protobuf:"bytes,1,opt,name=tx,proto3" json:"tx,omitempty"`
 	Blobs  []*Blob `protobuf:"bytes,2,rep,name=blobs,proto3" json:"blobs,omitempty"`

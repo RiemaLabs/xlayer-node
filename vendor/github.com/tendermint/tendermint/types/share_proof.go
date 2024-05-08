@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math"
 
-	kzg "github.com/riemalabs/nubit-kzg"
+	kzg "github.com/RiemaLabs/nubit-kzg"
 	"github.com/tendermint/tendermint/pkg/consts"
 	"github.com/tendermint/tendermint/proto/tendermint/crypto"
 	"github.com/tendermint/tendermint/proto/tendermint/types"
@@ -120,7 +120,7 @@ func (sp ShareProof) VerifyProof() bool {
 		if sp.NamespaceVersion > math.MaxUint8 {
 			return false
 		}
-		// Consider extracting nubit-app's namespace package. We can't use it
+		// Consider extracting nubit-validator's namespace package. We can't use it
 		// here because that would introduce a circulcar import.
 		namespace := append([]byte{uint8(sp.NamespaceVersion)}, sp.NamespaceID...)
 		valid := nmtProof.VerifyInclusion(

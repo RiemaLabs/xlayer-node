@@ -213,10 +213,10 @@ func ComputeProtoSizeForTxs(txs []Tx) int64 {
 // UnmarshalIndexWrapper attempts to unmarshal the provided transaction into an
 // IndexWrapper transaction. It returns true if the provided transaction is an
 // IndexWrapper transaction. An IndexWrapper transaction is a transaction that contains
-// a MsgPayForBlob that has been wrapped with a share index.
+// a MsgSubmitBlobPayment that has been wrapped with a share index.
 //
 // NOTE: protobuf sometimes does not throw an error if the transaction passed is
-// not a tmproto.IndexWrapper, since the protobuf definition for MsgPayForBlob is
+// not a tmproto.IndexWrapper, since the protobuf definition for MsgSubmitBlobPayment is
 // kept in the app, we cannot perform further checks without creating an import
 // cycle.
 func UnmarshalIndexWrapper(tx Tx) (indexWrapper cmtproto.IndexWrapper, isIndexWrapper bool) {

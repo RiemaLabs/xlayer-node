@@ -85,7 +85,7 @@ influx_batch_size = 20
 
 or
 ```sh
-nubit-appd start --influxdb-url=http://your-influx-ip:8086/ --influxdb-token="your-token"
+nubit-validatord start --influxdb-url=http://your-influx-ip:8086/ --influxdb-token="your-token"
 ```
 
 ### e2e tests

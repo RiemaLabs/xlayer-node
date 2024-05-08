@@ -292,7 +292,7 @@ func To32PaddedHexBytes(number uint64) ([]byte, error) {
 
 // DataRootTuple contains the data that will be used to create the QGB commitments.
 // The commitments will be signed by orchestrators and submitted to an EVM chain via a relayer.
-// For more information: https://github.com/riemalabs/quantum-gravity-bridge/blob/master/src/DataRootTuple.sol
+// For more information: https://github.com/RiemaLabs/quantum-gravity-bridge/blob/master/src/DataRootTuple.sol
 type DataRootTuple struct {
 	height   uint64
 	dataRoot [32]byte
@@ -324,7 +324,7 @@ type DataRootTuple struct {
 //
 // padding the hex representation of the height padded to 32 bytes concatenated to the data root.
 // For more information, refer to:
-// https://github.com/riemalabs/quantum-gravity-bridge/blob/master/src/DataRootTuple.sol
+// https://github.com/RiemaLabs/quantum-gravity-bridge/blob/master/src/DataRootTuple.sol
 func EncodeDataRootTuple(height uint64, dataRoot [32]byte) ([]byte, error) {
 	paddedHeight, err := To32PaddedHexBytes(height)
 	if err != nil {
