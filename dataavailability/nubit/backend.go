@@ -13,7 +13,6 @@ import (
 	"github.com/RiemaLabs/nubit-validator/da/namespace"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"golang.org/x/crypto/sha3"
 )
 
 // // DABackender is an interface for components that store and retrieve batch data
@@ -67,8 +66,7 @@ func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address) (*Nubi
 	if err != nil {
 		return nil, err
 	}
-	ns := sha3.Sum224([]byte(config.Namespace))
-	name := namespace.MustNew(namespace.NamespaceVersionZero, ns[:])
+	name := namespace.MustNewV0([]byte(config.Namespace))
 
 	log.Infof("⚙️     Nubit Namespace : %s ", string(name.ID))
 	return &NubitDABackend{
