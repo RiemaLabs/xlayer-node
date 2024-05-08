@@ -22,34 +22,10 @@ import (
 	"strconv"
 	"strings"
 
-	"google.golang.org/protobuf/types/known/timestamppb"
-
 	"github.com/prometheus/common/model"
 
 	dto "github.com/prometheus/client_model/go"
 )
-
-type encoderOption struct {
-	withCreatedLines bool
-}
-
-type EncoderOption func(*encoderOption)
-
-// WithCreatedLines is an EncoderOption that configures the OpenMetrics encoder
-// to include _created lines (See
-// https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#counter-1).
-// Created timestamps can improve the accuracy of series reset detection, but
-// come with a bandwidth cost.
-//
-// At the time of writing, created timestamp ingestion is still experimental in
-// Prometheus and need to be enabled with the feature-flag
-// `--feature-flag=created-timestamp-zero-ingestion`, and breaking changes are
-// still possible. Therefore, it is recommended to use this feature with caution.
-func WithCreatedLines() EncoderOption {
-	return func(t *encoderOption) {
-		t.withCreatedLines = true
-	}
-}
 
 // MetricFamilyToOpenMetrics converts a MetricFamily proto message into the
 // OpenMetrics text format and writes the resulting lines to 'out'. It returns
@@ -88,20 +64,15 @@ func WithCreatedLines() EncoderOption {
 //     its type will be set to `unknown` in that case to avoid invalid OpenMetrics
 //     output.
 //
-//   - No support for the following (optional) features: `# UNIT` line, info type,
-//     stateset type, gaugehistogram type.
+//   - No support for the following (optional) features: `# UNIT` line, `_created`
+//     line, info type, stateset type, gaugehistogram type.
 //
 //   - The size of exemplar labels is not checked (i.e. it's possible to create
 //     exemplars that are larger than allowed by the OpenMetrics specification).
 //
 //   - The value of Counters is not checked. (OpenMetrics doesn't allow counters
 //     with a `NaN` value.)
-func MetricFamilyToOpenMetrics(out io.Writer, in *dto.MetricFamily, options ...EncoderOption) (written int, err error) {
-	toOM := encoderOption{}
-	for _, option := range options {
-		option(&toOM)
-	}
-
+func MetricFamilyToOpenMetrics(out io.Writer, in *dto.MetricFamily) (written int, err error) {
 	name := in.GetName()
 	if name == "" {
 		return 0, fmt.Errorf("MetricFamily has no name: %s", in)
@@ -193,7 +164,6 @@ func MetricFamilyToOpenMetrics(out io.Writer, in *dto.MetricFamily, options ...E
 		return
 	}
 
-	var createdTsBytesWritten int
 	// Finally the samples, one line for each.
 	for _, metric := range in.Metric {
 		switch metricType {
@@ -211,10 +181,6 @@ func MetricFamilyToOpenMetrics(out io.Writer, in *dto.MetricFamily, options ...E
 				metric.Counter.GetValue(), 0, false,
 				metric.Counter.Exemplar,
 			)
-			if toOM.withCreatedLines && metric.Counter.CreatedTimestamp != nil {
-				createdTsBytesWritten, err = writeOpenMetricsCreated(w, name, "_total", metric, "", 0, metric.Counter.GetCreatedTimestamp())
-				n += createdTsBytesWritten
-			}
 		case dto.MetricType_GAUGE:
 			if metric.Gauge == nil {
 				return written, fmt.Errorf(
@@ -269,10 +235,6 @@ func MetricFamilyToOpenMetrics(out io.Writer, in *dto.MetricFamily, options ...E
 				0, metric.Summary.GetSampleCount(), true,
 				nil,
 			)
-			if toOM.withCreatedLines && metric.Summary.CreatedTimestamp != nil {
-				createdTsBytesWritten, err = writeOpenMetricsCreated(w, name, "", metric, "", 0, metric.Summary.GetCreatedTimestamp())
-				n += createdTsBytesWritten
-			}
 		case dto.MetricType_HISTOGRAM:
 			if metric.Histogram == nil {
 				return written, fmt.Errorf(
@@ -321,10 +283,6 @@ func MetricFamilyToOpenMetrics(out io.Writer, in *dto.MetricFamily, options ...E
 				0, metric.Histogram.GetSampleCount(), true,
 				nil,
 			)
-			if toOM.withCreatedLines && metric.Histogram.CreatedTimestamp != nil {
-				createdTsBytesWritten, err = writeOpenMetricsCreated(w, name, "", metric, "", 0, metric.Histogram.GetCreatedTimestamp())
-				n += createdTsBytesWritten
-			}
 		default:
 			return written, fmt.Errorf(
 				"unexpected type in metric %s %s", name, metric,
@@ -392,7 +350,7 @@ func writeOpenMetricsSample(
 			return written, err
 		}
 	}
-	if exemplar != nil && len(exemplar.Label) > 0 {
+	if exemplar != nil {
 		n, err = writeExemplar(w, exemplar)
 		written += n
 		if err != nil {
@@ -508,49 +466,6 @@ func writeOpenMetricsNameAndLabelPairs(
 		}
 	}
 	err := w.WriteByte('}')
-	written++
-	if err != nil {
-		return written, err
-	}
-	return written, nil
-}
-
-// writeOpenMetricsCreated writes the created timestamp for a single time series
-// following OpenMetrics text format to w, given the metric name, the metric proto
-// message itself, optionally a suffix to be removed, e.g. '_total' for counters,
-// an additional label name with a float64 value (use empty string as label name if
-// not required) and the timestamp that represents the created timestamp.
-// The function returns the number of bytes written and any error encountered.
-func writeOpenMetricsCreated(w enhancedWriter,
-	name, suffixToTrim string, metric *dto.Metric,
-	additionalLabelName string, additionalLabelValue float64,
-	createdTimestamp *timestamppb.Timestamp,
-) (int, error) {
-	written := 0
-	n, err := writeOpenMetricsNameAndLabelPairs(
-		w, strings.TrimSuffix(name, suffixToTrim)+"_created", metric.Label, additionalLabelName, additionalLabelValue,
-	)
-	written += n
-	if err != nil {
-		return written, err
-	}
-
-	err = w.WriteByte(' ')
-	written++
-	if err != nil {
-		return written, err
-	}
-
-	// TODO(beorn7): Format this directly from components of ts to
-	// avoid overflow/underflow and precision issues of the float
-	// conversion.
-	n, err = writeOpenMetricsFloat(w, float64(createdTimestamp.AsTime().UnixNano())/1e9)
-	written += n
-	if err != nil {
-		return written, err
-	}
-
-	err = w.WriteByte('\n')
 	written++
 	if err != nil {
 		return written, err

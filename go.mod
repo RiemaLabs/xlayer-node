@@ -19,7 +19,7 @@ require (
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/prometheus/client_model v0.6.0
-	github.com/prometheus/common v0.49.0
+	github.com/prometheus/common v0.47.0
 	github.com/rubenv/sql-migrate v1.6.1
 	github.com/spf13/afero v1.11.0
 	github.com/spf13/viper v1.18.2
@@ -171,12 +171,12 @@ require (
 )
 
 require (
-	github.com/0xPolygon/agglayer v0.1.4
+	github.com/0xPolygon/agglayer v0.0.1
 	github.com/0xPolygon/cdk-data-availability v0.0.5
 	github.com/RiemaLabs/nubit-node v0.0.0-00010101000000-000000000000
 	github.com/RiemaLabs/nubit-validator v0.1.0-rc.1
 	github.com/fatih/color v1.16.0
-	github.com/prometheus/client_golang v1.19.0
+	github.com/prometheus/client_golang v1.18.0
 	golang.org/x/exp v0.0.0-20240213143201-ec583247a57a
 )
 
