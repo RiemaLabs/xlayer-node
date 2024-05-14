@@ -1,6 +1,6 @@
 version: "3.5"
 networks:
-  avial:
+  nubitnetwork:
     external: true
 
 services:
@@ -20,7 +20,7 @@ services:
     depends_on:
       - telegraf
     networks:
-      - avial
+      - nubitnetwork
 
   telegraf:
     container_name: telegraf
@@ -38,7 +38,7 @@ services:
       - grafana-db
       - zkevm-json-rpc
     networks:
-      - avial
+      - nubitnetwork
 
   grafana-db:
     container_name: grafana-db
@@ -50,7 +50,7 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=grafana
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-sequencer:
     container_name: zkevm-sequencer
@@ -74,7 +74,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components sequencer"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-sequencer-v1tov2:
     container_name: zkevm-sequencer-v1tov2
@@ -98,7 +98,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components sequencer"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-sequence-sender:
@@ -120,7 +120,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components sequence-sender"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-sequence-sender-v1tov2:
     container_name: zkevm-sequence-sender-v1tov2
@@ -141,7 +141,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components sequence-sender"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-json-rpc:
@@ -165,7 +165,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components rpc"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-json-rpc-v1tov2:
     container_name: zkevm-json-rpc-v1tov2
@@ -188,7 +188,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components rpc"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-aggregator:
     container_name: zkevm-aggregator
@@ -209,7 +209,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components aggregator"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-aggregator-v1tov2:
@@ -231,7 +231,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components aggregator"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-sync:
@@ -252,7 +252,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components synchronizer"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-sync-v1tov2:
@@ -273,7 +273,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components synchronizer"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-eth-tx-manager:
@@ -294,7 +294,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components eth-tx-manager"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-eth-tx-manager-v1tov2:
@@ -315,7 +315,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components eth-tx-manager"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-l2gaspricer:
     container_name: zkevm-l2gaspricer
@@ -332,7 +332,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components l2gaspricer"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-l2gaspricer-v1tov2:
     container_name: zkevm-l2gaspricer-v1tov2
@@ -349,7 +349,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components l2gaspricer"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-state-db:
     container_name: zkevm-state-db
@@ -373,7 +373,7 @@ services:
       - "-N"
       - "500"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-pool-db:
     container_name: zkevm-pool-db
@@ -395,7 +395,7 @@ services:
       - "-N"
       - "500"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-event-db:
     container_name: zkevm-event-db
@@ -419,7 +419,7 @@ services:
       - "-N"
       - "500"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-explorer-l1:
     container_name: zkevm-explorer-l1
@@ -440,7 +440,7 @@ services:
       - "-c"
       - "mix do ecto.create, ecto.migrate; mix phx.server"
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-explorer-l1-db:
@@ -457,7 +457,7 @@ services:
       - "-N"
       - "500"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-explorer-l2:
     container_name: zkevm-explorer-l2
@@ -480,7 +480,7 @@ services:
       - "-c"
       - "mix do ecto.create, ecto.migrate; mix phx.server"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-explorer-json-rpc:
     container_name: zkevm-explorer-json-rpc
@@ -504,7 +504,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components rpc --http.api eth,net,debug,zkevm,txpool,web3"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-explorer-l2-db:
     container_name: zkevm-explorer-l2-db
@@ -517,7 +517,7 @@ services:
       - POSTGRES_DB=l2_explorer_db
     command: [ "postgres", "-N", "50" ]
     networks:
-      - avial
+      - nubitnetwork
 
 
   zkevm-mock-l1-network:
@@ -550,7 +550,7 @@ services:
       - "full"
       - "--rpc.allow-unprotected-txs"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-v1tov2-l1-network:
     container_name: zkevm-v1tov2-l1-network
@@ -582,7 +582,7 @@ services:
       - "full"
       - "--rpc.allow-unprotected-txs"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-prover:
     container_name: zkevm-prover
@@ -597,7 +597,7 @@ services:
     command: >
       zkProver -c /usr/src/app/config.json
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-approve:
     container_name: zkevm-approve
@@ -614,7 +614,7 @@ services:
       - "-c"
       - "/app/zkevm-node approve --network custom --custom-network-file /app/genesis.json --key-store-path /pk/keystore --pw testonly --am 115792089237316195423570985008687907853269984665640564039457584007913129639935 -y --cfg /app/config.toml"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-approve-v1tov2:
     container_name: zkevm-approve-v1tov2
@@ -631,7 +631,7 @@ services:
       - "-c"
       - "/app/zkevm-node approve --network custom --custom-network-file /app/genesis.json --key-store-path /pk/keystore --pw testonly --am 115792089237316195423570985008687907853269984665640564039457584007913129639935 -y --cfg /app/config.toml"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-permissionless-db:
     container_name: zkevm-permissionless-db
@@ -655,7 +655,7 @@ services:
       - "-N"
       - "500"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-permissionless-node:
     container_name: zkevm-permissionless-node
@@ -684,7 +684,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components \"rpc,synchronizer\""
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-permissionless-prover:
     container_name: zkevm-permissionless-prover
@@ -699,7 +699,7 @@ services:
     command: >
       zkProver -c /usr/src/app/config.json
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-metrics:
     image: prom/prometheus:v2.39.1
@@ -713,7 +713,7 @@ services:
     volumes:
       - ../config/metrics/prometheus:/etc/prometheus
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-sh:
     container_name: zkevm-sh
@@ -730,7 +730,7 @@ services:
     command:
       - "/bin/sh"
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-node-forced-DAC:
     container_name: zkevm-node-forced-DAC
@@ -760,7 +760,7 @@ services:
       - "-c"
       - "/app/zkevm-node run --network custom --custom-network-file /app/genesis.json --cfg /app/config.toml --components \"rpc,synchronizer\""
     networks:
-      - avial
+      - nubitnetwork
 
   zkevm-data-node-db:
     container_name: zkevm-data-node-db
@@ -782,4 +782,4 @@ services:
       - "-N"
       - "500"
     networks:
-      - avial
+      - nubitnetwork
