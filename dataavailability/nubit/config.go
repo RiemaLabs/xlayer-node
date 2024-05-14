@@ -7,9 +7,9 @@ import (
 )
 
 type Config struct {
-	RpcURL    string `json:"rpcURL,omitempty"`
-	Namespace string `json:"modularAppName,omitempty"`
-	AuthKey   string `json:"authKey,omitempty"`
+	RpcURL    string `json:"rpcURL"`
+	Namespace string `json:"modularAppName"`
+	AuthKey   string `json:"authKey"`
 }
 
 func (c *Config) GetConfig(configFileName string) error {
