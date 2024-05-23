@@ -2,7 +2,9 @@ package nubit
 
 import (
 	"context"
+	"crypto/ecdsa"
 	"fmt"
+	daTypes "github.com/0xPolygon/cdk-data-availability/types"
 	"math/big"
 
 	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/polygondatacommittee"
@@ -37,13 +39,15 @@ import (
 // }
 
 type NubitDABackend struct {
-	config              *Config
-	attestationContract *polygondatacommittee.Polygondatacommittee
-	ns                  namespace.Namespace
-	client              *client.Client
+	config                *Config
+	attestationContract   *polygondatacommittee.Polygondatacommittee
+	ns                    namespace.Namespace
+	privKey               *ecdsa.PrivateKey
+	client                *client.Client
+	dataCommitteeContract *polygondatacommittee.Polygondatacommittee
 }
 
-func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address) (*NubitDABackend, error) {
+func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address, privKey *ecdsa.PrivateKey) (*NubitDABackend, error) {
 	var config Config
 	err := config.GetConfig("/app/nubit-config.json")
 	if err != nil {
@@ -67,13 +71,16 @@ func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address) (*Nubi
 		return nil, err
 	}
 	name := namespace.MustNewV0([]byte(config.Namespace))
+	dataCommittee, err := polygondatacommittee.NewPolygondatacommittee(dataCommitteeAddr, ethClient)
 
 	log.Infof("⚙️     Nubit Namespace : %s ", string(name.ID))
 	return &NubitDABackend{
-		config:              &config,
-		attestationContract: attestationContract,
-		ns:                  name,
-		client:              cn,
+		dataCommitteeContract: dataCommittee,
+		config:                &config,
+		attestationContract:   attestationContract,
+		privKey:               privKey,
+		ns:                    name,
+		client:                cn,
 	}, nil
 }
 
@@ -83,23 +90,23 @@ func (a *NubitDABackend) Init() error {
 
 // PostSequence sends the sequence data to the data availability backend, and returns the dataAvailabilityMessage
 // as expected by the contract
-func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte) ([]byte, error) {
+func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte) ([]byte, []byte, []byte, error) {
 	encodedData, err := MarshalBatchData(batchesData)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.MarshalBatchData:%s", err)
-		return encodedData, err
+		return encodedData, nil, nil, err
 	}
 
 	nsp, err := share.NamespaceFromBytes(a.ns.Bytes())
 	if nil != err {
 		log.Errorf("🏆    NubitDABackend.NamespaceFromBytes:%s", err)
-		return nil, err
+		return nil, nil, nil, err
 	}
 
 	body, err := nodeBlob.NewBlobV0(nsp, encodedData)
 	if nil != err {
 		log.Errorf("🏆    NubitDABackend.NewBlobV0:%s", err)
-		return nil, err
+		return nil, nil, nil, err
 	}
 
 	log.Infof("🏆     Nubit send data:%+v", body)
@@ -107,7 +114,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	blockNumber, err := a.client.Blob.Submit(ctx, []*nodeBlob.Blob{body}, 0.01)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.Submit:%s", err)
-		return nil, err
+		return nil, nil, nil, err
 	}
 
 	// todo: May be need to sleep
@@ -128,12 +135,18 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	// todo: use bridge API data
 	returnData, err := batchDAData.Encode()
 	if err != nil {
-		return nil, fmt.Errorf("🏆  Nubit cannot encode batch data:%w", err)
+		return nil, nil, nil, fmt.Errorf("🏆  Nubit cannot encode batch data:%w", err)
 	}
 
+	sequence := daTypes.Sequence{}
+	for _, seq := range batchesData {
+		sequence = append(sequence, seq)
+	}
+	signedSequence, err := sequence.Sign(a.privKey) //todo
+	sequence.HashToSign()
 	log.Infof("🏆  Nubit Data submitted by sequencer:%d bytes against namespace %v sent with height %#x", len(encodedData), a.ns, blockNumber)
 
-	return returnData, nil
+	return returnData, sequence.HashToSign(), signedSequence.Signature, nil
 }
 
 func (a *NubitDABackend) GetSequence(ctx context.Context, batchHashes []common.Hash, dataAvailabilityMessage []byte) ([][]byte, error) {
@@ -151,4 +164,17 @@ func (a *NubitDABackend) GetSequence(ctx context.Context, batchHashes []common.H
 	}
 	log.Infof("🏆     Nubit GetSequence blob.data:%+v", blob.GetData())
 	return UnmarshalBatchData(blob.GetData())
+}
+
+// DataCommitteeMember represents a member of the Data Committee
+type DataCommitteeMember struct {
+	Addr common.Address
+	URL  string
+}
+
+// DataCommittee represents a specific committee
+type DataCommittee struct {
+	AddressesHash      common.Hash
+	Members            []DataCommitteeMember
+	RequiredSignatures uint64
 }

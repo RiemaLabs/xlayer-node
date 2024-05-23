@@ -17,7 +17,7 @@ import (
 
 // etherman contains the methods required to interact with ethereum.
 type etherman interface {
-	BuildSequenceBatchesTxData(sender common.Address, sequences []ethmanTypes.Sequence, maxSequenceTimestamp uint64, initSequenceBatchNumber uint64, l2Coinbase common.Address, committeeSignaturesAndAddrs []byte) (to *common.Address, data []byte, err error)
+	BuildSequenceBatchesTxData(sender common.Address, sequences []ethmanTypes.Sequence, maxSequenceTimestamp uint64, initSequenceBatchNumber uint64, l2Coinbase common.Address, committeeSignaturesAndAddrs []byte, hash []byte, signature []byte) (to *common.Address, data []byte, err error)
 	EstimateGasSequenceBatches(sender common.Address, sequences []ethmanTypes.Sequence, maxSequenceTimestamp uint64, initSequenceBatchNumber uint64, l2Coinbase common.Address, committeeSignaturesAndAddrs []byte) (*types.Transaction, error)
 	GetLatestBlockHeader(ctx context.Context) (*types.Header, error)
 	GetLatestBatchNumber() (uint64, error)
@@ -43,5 +43,5 @@ type ethTxManager interface {
 }
 
 type dataAbilitier interface {
-	PostSequence(ctx context.Context, sequences []ethmanTypes.Sequence) ([]byte, error)
+	PostSequence(ctx context.Context, sequences []ethmanTypes.Sequence) ([]byte, []byte, []byte, error)
 }
