@@ -2,6 +2,7 @@ package nubit
 
 import (
 	"encoding/json"
+	"github.com/rollkit/go-da"
 	"math/big"
 	"reflect"
 )
@@ -9,6 +10,7 @@ import (
 type BatchDAData struct {
 	BlockNumber *big.Int `json:"blockNumber,omitempty"`
 	Commitment  []byte   `json:"commitment,omitempty"`
+	ID          []da.ID  `json:"id,omitempty"`
 }
 
 // write a function that encode batchDAData struct into ABI-encoded bytes

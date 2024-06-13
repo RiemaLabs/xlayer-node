@@ -3,18 +3,15 @@ package nubit
 import (
 	"context"
 	"crypto/ecdsa"
+	"encoding/hex"
 	"fmt"
 	daTypes "github.com/0xPolygon/cdk-data-availability/types"
-	"math/big"
-
 	"github.com/0xPolygonHermez/zkevm-node/etherman/smartcontracts/polygondatacommittee"
 	"github.com/0xPolygonHermez/zkevm-node/log"
-	share "github.com/RiemaLabs/nubit-node/da"
-	client "github.com/RiemaLabs/nubit-node/rpc/rpc/client"
-	nodeBlob "github.com/RiemaLabs/nubit-node/strucs/btx"
-	"github.com/RiemaLabs/nubit-validator/da/namespace"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/rollkit/go-da"
+	"github.com/rollkit/go-da/proxy"
 )
 
 // // DABackender is an interface for components that store and retrieve batch data
@@ -41,9 +38,9 @@ import (
 type NubitDABackend struct {
 	config                *Config
 	attestationContract   *polygondatacommittee.Polygondatacommittee
-	ns                    namespace.Namespace
+	ns                    da.Namespace
 	privKey               *ecdsa.PrivateKey
-	client                *client.Client
+	client                da.DA
 	dataCommitteeContract *polygondatacommittee.Polygondatacommittee
 }
 
@@ -66,14 +63,14 @@ func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address, privKe
 	if err != nil {
 		return nil, err
 	}
-	cn, err := client.NewClient(context.TODO(), config.RpcURL, config.AuthKey)
+	cn, err := proxy.NewClient(config.RpcURL, config.AuthKey)
 	if err != nil {
 		return nil, err
 	}
-	name := namespace.MustNewV0([]byte(config.Namespace))
+	name, err := hex.DecodeString(config.Namespace)
 	dataCommittee, err := polygondatacommittee.NewPolygondatacommittee(dataCommitteeAddr, ethClient)
 
-	log.Infof("⚙️     Nubit Namespace : %s ", string(name.ID))
+	log.Infof("⚙️     Nubit Namespace : %s ", string(name))
 	return &NubitDABackend{
 		dataCommitteeContract: dataCommittee,
 		config:                &config,
@@ -97,21 +94,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 		return encodedData, nil, nil, err
 	}
 
-	nsp, err := share.NamespaceFromBytes(a.ns.Bytes())
-	if nil != err {
-		log.Errorf("🏆    NubitDABackend.NamespaceFromBytes:%s", err)
-		return nil, nil, nil, err
-	}
-
-	body, err := nodeBlob.NewBlobV0(nsp, encodedData)
-	if nil != err {
-		log.Errorf("🏆    NubitDABackend.NewBlobV0:%s", err)
-		return nil, nil, nil, err
-	}
-
-	log.Infof("🏆     Nubit send data:%+v", body)
-
-	blockNumber, err := a.client.Blob.Submit(ctx, []*nodeBlob.Blob{body}, 0.01)
+	id, err := a.client.Submit(ctx, [][]byte{encodedData}, -1, a.ns)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.Submit:%s", err)
 		return nil, nil, nil, err
@@ -127,9 +110,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	//log.Infof("🏆   Nubit received data proof:%+v", dataProof)
 
 	var batchDAData BatchDAData
-	batchDAData.Commitment = body.Commitment
-
-	batchDAData.BlockNumber = big.NewInt(int64(blockNumber))
+	batchDAData.ID = id
 	log.Infof("🏆  Nubit prepared DA data:%+v", batchDAData)
 
 	// todo: use bridge API data
@@ -144,7 +125,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	}
 	signedSequence, err := sequence.Sign(a.privKey) //todo
 	sequence.HashToSign()
-	log.Infof("🏆  Nubit Data submitted by sequencer:%d bytes against namespace %v sent with height %#x", len(encodedData), a.ns, blockNumber)
+	log.Infof("🏆  Nubit Data submitted by sequencer:%d bytes against namespace %v sent with id %#x", len(encodedData), a.ns, id)
 
 	return returnData, sequence.HashToSign(), signedSequence.Signature, nil
 }
@@ -157,13 +138,13 @@ func (a *NubitDABackend) GetSequence(ctx context.Context, batchHashes []common.H
 		return nil, err
 	}
 	log.Infof("🏆     Nubit GetSequence batchDAData:%+v", batchDAData)
-	blob, err := a.client.Blob.Get(context.TODO(), batchDAData.BlockNumber.Uint64(), a.ns.Bytes(), batchDAData.Commitment)
+	blob, err := a.client.Get(context.TODO(), batchDAData.ID, a.ns)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.GetSequence.Blob.Get:%s", err)
 		return nil, err
 	}
-	log.Infof("🏆     Nubit GetSequence blob.data:%+v", blob.GetData())
-	return UnmarshalBatchData(blob.GetData())
+	log.Infof("🏆     Nubit GetSequence blob.data:%+v", blob[0])
+	return UnmarshalBatchData(blob[0])
 }
 
 // DataCommitteeMember represents a member of the Data Committee
