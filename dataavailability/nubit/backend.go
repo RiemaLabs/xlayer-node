@@ -106,17 +106,17 @@ func (a *NubitDABackend) Init() error {
 
 // PostSequence sends the sequence data to the data availability backend, and returns the dataAvailabilityMessage
 // as expected by the contract
-func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte) ([]byte, []byte, []byte, error) {
+func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte) ([]byte, []byte, error) {
 	encodedData, err := MarshalBatchData(batchesData)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.MarshalBatchData:%s", err)
-		return encodedData, nil, nil, err
+		return encodedData, nil, err
 	}
 
 	id, err := a.client.Submit(ctx, [][]byte{encodedData}, -1, a.ns)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.Submit:%s", err)
-		return nil, nil, nil, err
+		return nil, nil, err
 	}
 
 	// todo: May be need to sleep
@@ -135,7 +135,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	// todo: use bridge API data
 	returnData, err := batchDAData.Encode()
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("🏆  Nubit cannot encode batch data:%w", err)
+		return nil, nil, fmt.Errorf("🏆  Nubit cannot encode batch data:%w", err)
 	}
 
 	sequence := daTypes.Sequence{}
@@ -146,7 +146,9 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	sequence.HashToSign()
 	log.Infof("🏆  Nubit Data submitted by sequencer:%d bytes against namespace %v sent with id %#x", len(encodedData), a.ns, id)
 
-	return returnData, sequence.HashToSign(), signedSequence.Signature, nil
+	Signature := append(sequence.HashToSign(), signedSequence.Signature...)
+
+	return returnData, Signature, nil
 }
 
 func (a *NubitDABackend) GetSequence(ctx context.Context, batchHashes []common.Hash, dataAvailabilityMessage []byte) ([][]byte, error) {

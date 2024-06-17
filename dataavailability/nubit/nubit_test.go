@@ -20,7 +20,7 @@ func TestStoreDetailsOnChain(t *testing.T) {
 		t.Fatal(err)
 	}
 	txs := []byte("test txs")
-	returnData, _, _, err := nubit.PostSequence(context.TODO(), [][]byte{txs})
+	returnData, _, err := nubit.PostSequence(context.TODO(), [][]byte{txs})
 	require.NoError(t, err)
 	_, err = nubit.GetSequence(context.TODO(), []common.Hash{}, returnData)
 	require.NoError(t, err)
