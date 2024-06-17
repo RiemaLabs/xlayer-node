@@ -67,7 +67,7 @@ func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address, privKe
 	if err != nil {
 		return nil, err
 	}
-	name, err := hex.DecodeString(config.Namespace)
+	name, err := hex.DecodeString("00000000000000000000000000000000000000000000706f6c79676f6e")
 	dataCommittee, err := polygondatacommittee.NewPolygondatacommittee(dataCommitteeAddr, ethClient)
 
 	log.Infof("⚙️     Nubit Namespace : %s ", string(name))
@@ -78,6 +78,25 @@ func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address, privKe
 		privKey:               privKey,
 		ns:                    name,
 		client:                cn,
+	}, nil
+}
+
+func NewNubitDABackendTest(url string, authKey string, pk *ecdsa.PrivateKey) (*NubitDABackend, error) {
+	cn, err := proxy.NewClient(url, authKey)
+	if err != nil || cn == nil {
+		return nil, err
+	}
+
+	name, err := hex.DecodeString("00000000000000000000000000000000000000000000706f6c79676f6e")
+	if err != nil {
+		return nil, err
+	}
+
+	log.Infof("⚙️     Nubit Namespace : %s ", string(name))
+	return &NubitDABackend{
+		ns:      name,
+		client:  cn,
+		privKey: pk,
 	}, nil
 }
 
@@ -131,7 +150,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 }
 
 func (a *NubitDABackend) GetSequence(ctx context.Context, batchHashes []common.Hash, dataAvailabilityMessage []byte) ([][]byte, error) {
-	var batchDAData BatchDAData
+	batchDAData := BatchDAData{}
 	err := batchDAData.Decode(dataAvailabilityMessage)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.GetSequence.Decode:%s", err)
@@ -143,8 +162,12 @@ func (a *NubitDABackend) GetSequence(ctx context.Context, batchHashes []common.H
 		log.Errorf("🏆    NubitDABackend.GetSequence.Blob.Get:%s", err)
 		return nil, err
 	}
-	log.Infof("🏆     Nubit GetSequence blob.data:%+v", blob[0])
-	return UnmarshalBatchData(blob[0])
+	log.Infof("🏆     Nubit GetSequence blob.data:%+v", len(blob))
+	byteBlob := make([][]byte, len(blob))
+	for _, b := range blob {
+		byteBlob = append(byteBlob, b)
+	}
+	return byteBlob, nil
 }
 
 // DataCommitteeMember represents a member of the Data Committee
