@@ -125,8 +125,12 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 		log.Infof("🏆  Nubit BatchsDataCache:%+v", len(encodedData))
 		return nil, nil, nil
 	}
-
-	id, err := a.client.Submit(ctx, BatchsDataCache, -1, a.ns)
+	BatchsData, err := MarshalBatchData(BatchsDataCache)
+	if err != nil {
+		log.Errorf("🏆    NubitDABackend.MarshalBatchData:%s", err)
+		return nil, nil, err
+	}
+	id, err := a.client.Submit(ctx, [][]byte{BatchsData}, -1, a.ns)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.Submit:%s", err)
 		return nil, nil, err
