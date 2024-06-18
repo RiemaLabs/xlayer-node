@@ -112,6 +112,7 @@ func (a *NubitDABackend) Init() error {
 // as expected by the contract
 
 var BatchsDataCache = [][]byte{}
+var BatchsSize = 0
 
 func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte) ([]byte, []byte, error) {
 	encodedData, err := MarshalBatchData(batchesData)
@@ -121,10 +122,15 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	}
 
 	BatchsDataCache = append(BatchsDataCache, encodedData)
-	if time.Since(a.commitTime) < 5*time.Second {
-		log.Infof("🏆  Nubit BatchsDataCache:%+v", len(encodedData))
-		return nil, nil, nil
+	BatchsSize += len(encodedData)
+	
+	if BatchsSize < 500*1024 {
+		if time.Since(a.commitTime) < 36*time.Second {
+			log.Infof("🏆  Nubit BatchsDataCache:%+v", len(encodedData))
+			return nil, nil, nil
+		}
 	}
+
 	BatchsData, err := MarshalBatchData(BatchsDataCache)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.MarshalBatchData:%s", err)
@@ -139,6 +145,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	log.Infof("🏆  Nubit Data submitted by sequencer: %d bytes against namespace %v sent with id %#x", len(BatchsDataCache), a.ns, id)
 	a.commitTime = time.Now()
 	BatchsDataCache = [][]byte{}
+	BatchsSize = 0
 	// todo: May be need to sleep
 	//dataProof, err := a.client.Blob.GetProof(ctx, uint64(blockNumber), a.ns.Bytes(), body.Commitment)
 	//if err != nil {
