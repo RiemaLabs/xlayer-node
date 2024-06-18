@@ -8,6 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/require"
 	"testing"
+	"time"
 )
 
 func TestStoreDetailsOnChain(t *testing.T) {
@@ -27,6 +28,7 @@ func TestStoreDetailsOnChain(t *testing.T) {
 		if r != nil {
 			returnData = r
 		}
+		time.Sleep(600 * time.Millisecond)
 	}
 
 	_, err = nubit.GetSequence(context.TODO(), []common.Hash{}, returnData)

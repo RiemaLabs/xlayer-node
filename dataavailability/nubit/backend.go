@@ -12,6 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/rollkit/go-da"
 	"github.com/rollkit/go-da/proxy"
+	"time"
 )
 
 // // DABackender is an interface for components that store and retrieve batch data
@@ -36,6 +37,7 @@ import (
 // }
 
 type NubitDABackend struct {
+	commitTime            time.Time
 	config                *Config
 	attestationContract   *polygondatacommittee.Polygondatacommittee
 	ns                    da.Namespace
@@ -78,6 +80,7 @@ func NewNubitDABackend(l1RPCURL string, dataCommitteeAddr common.Address, privKe
 		privKey:               privKey,
 		ns:                    name,
 		client:                cn,
+		commitTime:            time.Now(),
 	}, nil
 }
 
@@ -94,9 +97,10 @@ func NewNubitDABackendTest(url string, authKey string, pk *ecdsa.PrivateKey) (*N
 
 	log.Infof("⚙️     Nubit Namespace : %s ", string(name))
 	return &NubitDABackend{
-		ns:      name,
-		client:  cn,
-		privKey: pk,
+		ns:         name,
+		client:     cn,
+		privKey:    pk,
+		commitTime: time.Now(),
 	}, nil
 }
 
@@ -117,7 +121,7 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	}
 
 	BatchsDataCache = append(BatchsDataCache, encodedData)
-	if len(BatchsDataCache) < 10 {
+	if time.Since(a.commitTime) < 5*time.Second {
 		log.Infof("🏆  Nubit BatchsDataCache:%+v", len(encodedData))
 		return nil, nil, nil
 	}
@@ -127,7 +131,9 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 		log.Errorf("🏆    NubitDABackend.Submit:%s", err)
 		return nil, nil, err
 	}
+
 	log.Infof("🏆  Nubit Data submitted by sequencer: %d bytes against namespace %v sent with id %#x", len(BatchsDataCache), a.ns, id)
+	a.commitTime = time.Now()
 	BatchsDataCache = [][]byte{}
 	// todo: May be need to sleep
 	//dataProof, err := a.client.Blob.GetProof(ctx, uint64(blockNumber), a.ns.Bytes(), body.Commitment)
