@@ -106,6 +106,9 @@ func (a *NubitDABackend) Init() error {
 
 // PostSequence sends the sequence data to the data availability backend, and returns the dataAvailabilityMessage
 // as expected by the contract
+
+var BatchsDataCache = [][]byte{}
+
 func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte) ([]byte, []byte, error) {
 	encodedData, err := MarshalBatchData(batchesData)
 	if err != nil {
@@ -113,12 +116,19 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 		return encodedData, nil, err
 	}
 
-	id, err := a.client.Submit(ctx, [][]byte{encodedData}, -1, a.ns)
+	BatchsDataCache = append(BatchsDataCache, encodedData)
+	if len(BatchsDataCache) < 10 {
+		log.Infof("🏆  Nubit BatchsDataCache:%+v", len(encodedData))
+		return nil, nil, nil
+	}
+
+	id, err := a.client.Submit(ctx, BatchsDataCache, -1, a.ns)
 	if err != nil {
 		log.Errorf("🏆    NubitDABackend.Submit:%s", err)
 		return nil, nil, err
 	}
-
+	log.Infof("🏆  Nubit Data submitted by sequencer: %d bytes against namespace %v sent with id %#x", len(BatchsDataCache), a.ns, id)
+	BatchsDataCache = [][]byte{}
 	// todo: May be need to sleep
 	//dataProof, err := a.client.Blob.GetProof(ctx, uint64(blockNumber), a.ns.Bytes(), body.Commitment)
 	//if err != nil {
@@ -144,7 +154,6 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 	}
 	signedSequence, err := sequence.Sign(a.privKey) //todo
 	sequence.HashToSign()
-	log.Infof("🏆  Nubit Data submitted by sequencer:%d bytes against namespace %v sent with id %#x", len(encodedData), a.ns, id)
 
 	Signature := append(sequence.HashToSign(), signedSequence.Signature...)
 
