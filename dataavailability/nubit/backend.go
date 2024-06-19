@@ -123,12 +123,12 @@ func (a *NubitDABackend) PostSequence(ctx context.Context, batchesData [][]byte)
 
 	BatchsDataCache = append(BatchsDataCache, encodedData)
 	BatchsSize += len(encodedData)
-	
-	if BatchsSize < 500*1024 {
-		if time.Since(a.commitTime) < 36*time.Second {
-			log.Infof("🏆  Nubit BatchsDataCache:%+v", len(encodedData))
-			return nil, nil, nil
-		}
+	if BatchsSize < 100*1024 {
+		log.Infof("🏆  Nubit BatchsDataCache:%+v", len(encodedData))
+		return nil, nil, nil
+	}
+	if time.Since(a.commitTime) < 12*time.Second {
+		time.Sleep(time.Since(a.commitTime))
 	}
 
 	BatchsData, err := MarshalBatchData(BatchsDataCache)
